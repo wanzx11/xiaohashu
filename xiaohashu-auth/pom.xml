@@ -58,6 +58,11 @@
             <artifactId>xiaoha-spring-boot-starter-biz-operationlog</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.quanxiaoha</groupId>
+            <artifactId>xiaoha-spring-boot-starter-jackson</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
