@@ -32,6 +32,17 @@
             <artifactId>jackson-core</artifactId>
         </dependency>
 
+        <!-- 入参校验 -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+
         <!-- 解决 Jackson Java 8 新日期 API 的序列化问题 -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>

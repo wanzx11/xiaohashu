@@ -36,6 +36,7 @@
     <!-- Maven 相关版本号 -->
     <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 
+
     <!-- 依赖包版本 -->
     <lombok.version>1.18.30</lombok.version>
 
@@ -221,5 +222,6 @@
       <url>https://maven.aliyun.com/repository/public</url>
     </repository>
   </repositories>
+
 
 </project>

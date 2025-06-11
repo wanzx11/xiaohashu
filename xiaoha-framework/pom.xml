@@ -16,6 +16,7 @@
 
     <artifactId>xiaoha-framework</artifactId>
     <name>${project.artifactId}</name>
+
     <description>平台基础设施层：封装一些常用功能，供各个业务线拿来即用</description>
 
     <modules>
