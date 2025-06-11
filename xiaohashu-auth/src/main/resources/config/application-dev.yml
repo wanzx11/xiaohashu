@@ -53,8 +53,6 @@ spring:
           max-idle: 10 # 连接池中的最大空闲连接
 
 
-
-
 logging:
   level:
     com.quanxiaoha.xiaohashu.auth.domain.mapper: debug
