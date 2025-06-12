@@ -15,6 +15,13 @@
   <sql id="Base_Column_List">
     id, role_name, role_key, `status`, sort, remark, create_time, update_time, is_deleted
   </sql>
+
+  <select id="selectEnabledList" resultMap="BaseResultMap">
+    select id, role_key, role_name
+    from t_role
+    where status = 0 and is_deleted = 0
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

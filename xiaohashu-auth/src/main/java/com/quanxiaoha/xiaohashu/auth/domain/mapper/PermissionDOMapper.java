@@ -1,7 +1,11 @@
 package com.quanxiaoha.xiaohashu.auth.domain.mapper;
 
 import com.quanxiaoha.xiaohashu.auth.domain.dataobject.PermissionDO;
+import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
+@Mapper
 public interface PermissionDOMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +18,6 @@ public interface PermissionDOMapper {
     int updateByPrimaryKeySelective(PermissionDO record);
 
     int updateByPrimaryKey(PermissionDO record);
+
+    List<PermissionDO> selectAppEnabledList();
 }
