@@ -7,10 +7,7 @@ import com.quanxiaoha.xiaohashu.auth.service.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: 犬小哈
@@ -34,11 +31,9 @@ public class UserController {
 
     @PostMapping("/logout")
     @ApiOperationLog(description = "账号登出")
-    public Response<?> logout() {
-
-        // todo 账号退出登录逻辑待实现
-
-        return Response.success();
+    public Response<?> logout(@RequestHeader("userId") String userId) {
+        return userService.logout(Long.valueOf(userId));
     }
+
 
 }

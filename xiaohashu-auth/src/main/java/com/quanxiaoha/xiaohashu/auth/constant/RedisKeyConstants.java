@@ -32,6 +32,14 @@ public class RedisKeyConstants {
      */
     private static final String USER_ROLES_KEY_PREFIX = "user:roles:";
 
+    /**
+     * 构建角色对应的权限集合 KEY
+     * @param roleKey
+     * @return
+     */
+    public static String buildRolePermissionsKey(String roleKey) {
+        return ROLE_PERMISSIONS_KEY_PREFIX + roleKey;
+    }
 
     /**
      * 构建验证码 KEY
@@ -40,6 +48,11 @@ public class RedisKeyConstants {
      */
     public static String buildUserRoleKey(String phone) {
         return USER_ROLES_KEY_PREFIX + phone;
+    }
+
+    //用户对应的角色集合 KEY
+    public static String buildUserRoleKey(Long userId) {
+        return USER_ROLES_KEY_PREFIX + userId;
     }
 
     public static String buildRolePermissionsKey(Long roleId) {

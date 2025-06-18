@@ -11,8 +11,10 @@ import com.quanxiaoha.framework.common.response.Response;
 import com.quanxiaoha.framework.common.util.JsonUtils;
 import com.quanxiaoha.xiaohashu.auth.constant.RedisKeyConstants;
 import com.quanxiaoha.xiaohashu.auth.constant.RoleConstants;
+import com.quanxiaoha.xiaohashu.auth.domain.dataobject.RoleDO;
 import com.quanxiaoha.xiaohashu.auth.domain.dataobject.UserDO;
 import com.quanxiaoha.xiaohashu.auth.domain.dataobject.UserRoleDO;
+import com.quanxiaoha.xiaohashu.auth.domain.mapper.RoleDOMapper;
 import com.quanxiaoha.xiaohashu.auth.domain.mapper.UserDOMapper;
 import com.quanxiaoha.xiaohashu.auth.domain.mapper.UserRoleDOMapper;
 import com.quanxiaoha.xiaohashu.auth.enums.LoginTypeEnum;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,6 +50,8 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserRoleDOMapper userRoleDOMapper;
 
+    @Resource
+    private RoleDOMapper roleDOMapper;
 
     /**
      * 登录与注册
@@ -99,7 +104,19 @@ public class UserServiceImpl implements UserService {
                 break;
             case PASSWORD: // 密码登录
                 // todo
+                // 通过手机号查询记录
+                UserDO userDO1 = userDOMapper.selectByPhone(phone);
 
+                log.info("==> 用户是否注册, phone: {}, userDO: {}", phone, JsonUtils.toJsonString(userDO1));
+
+                // 判断是否注册
+                if (Objects.isNull(userDO1)) {
+                    // 若此用户还没有注册，系统自动注册该用户
+                    userId = registerUser(phone);
+                } else {
+                    // 已注册，则获取其用户 ID
+                    userId = userDO1.getId();
+                }
                 break;
             default:
                 break;
@@ -112,6 +129,14 @@ public class UserServiceImpl implements UserService {
 
         // 返回 Token 令牌
         return Response.success(tokenInfo.tokenValue);
+    }
+
+    @Override
+    public Response<?> logout(Long userId) {
+        // 退出登录 (指定用户 ID)
+        StpUtil.logout(userId);
+
+        return Response.success();
     }
 
     /**
@@ -150,10 +175,13 @@ public class UserServiceImpl implements UserService {
                 .build();
         userRoleDOMapper.insert(userRoleDO);
 
-        // 将该用户的角色 ID 存入 Redis 中
-        List<Long> roles = Lists.newArrayList();
-        roles.add(RoleConstants.COMMON_USER_ROLE_ID);
-        String userRolesKey = RedisKeyConstants.buildUserRoleKey(phone);
+        RoleDO roleDO = roleDOMapper.selectByPrimaryKey(RoleConstants.COMMON_USER_ROLE_ID);
+
+        // 将该用户的角色 ID 存入 Redis 中，指定初始容量为 1，这样可以减少在扩容时的性能开销
+        List<String> roles = new ArrayList<>(1);
+        roles.add(roleDO.getRoleKey());
+
+        String userRolesKey = RedisKeyConstants.buildUserRoleKey(userId);
         redisTemplate.opsForValue().set(userRolesKey, JsonUtils.toJsonString(roles));
 
         return userId;
