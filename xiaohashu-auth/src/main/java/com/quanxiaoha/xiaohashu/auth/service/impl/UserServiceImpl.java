@@ -19,6 +19,7 @@ import com.quanxiaoha.xiaohashu.auth.domain.mapper.UserDOMapper;
 import com.quanxiaoha.xiaohashu.auth.domain.mapper.UserRoleDOMapper;
 import com.quanxiaoha.xiaohashu.auth.enums.LoginTypeEnum;
 import com.quanxiaoha.xiaohashu.auth.enums.ResponseCodeEnum;
+import com.quanxiaoha.xiaohashu.auth.filter.LoginUserContextHolder;
 import com.quanxiaoha.xiaohashu.auth.model.vo.user.UserLoginReqVO;
 import com.quanxiaoha.xiaohashu.auth.service.UserService;
 import jakarta.annotation.Resource;
@@ -132,7 +133,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response<?> logout(Long userId) {
+    public Response<?> logout() {
+        Long userId = LoginUserContextHolder.getUserId();
+        log.info("==> 用户退出登录, userId: {}", userId);
+
         // 退出登录 (指定用户 ID)
         StpUtil.logout(userId);
 

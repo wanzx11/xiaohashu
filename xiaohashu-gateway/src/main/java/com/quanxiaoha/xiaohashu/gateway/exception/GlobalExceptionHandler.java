@@ -39,7 +39,7 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
             // 设置 401 状态码
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             // 构建响应结果
-            result = Response.fail(ResponseCodeEnum.UNAUTHORIZED.getErrorCode(), "未携带 Token 令牌");
+            result = Response.fail(ResponseCodeEnum.UNAUTHORIZED.getErrorCode(), ex.getMessage());
         } else if (ex instanceof NotPermissionException) { // 无权限异常
             // 权限认证失败时，设置 401 状态码
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -48,7 +48,6 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
         } else { // 其他异常，则统一提示 “系统繁忙” 错误
             result = Response.fail(ResponseCodeEnum.SYSTEM_ERROR);
         }
-
 
         // 设置响应头的内容类型为 application/json;charset=UTF-8，表示响应体为 JSON 格式
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
