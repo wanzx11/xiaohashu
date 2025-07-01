@@ -64,6 +64,8 @@
 
     <nacos-config.version>0.3.0-RC</nacos-config.version>
 
+    <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
+
   </properties>
 
   <!-- 统一依赖管理 -->
@@ -142,6 +144,12 @@
         <version>${revision}</version>
       </dependency>
 
+     <dependency>
+        <groupId>com.quanxiaoha</groupId>
+        <artifactId>xiaoha-spring-boot-starter-biz-context</artifactId>
+        <version>${revision}</version>
+      </dependency>
+
       <!-- Jackson -->
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
@@ -206,6 +214,12 @@
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
         <version>${sa-token.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>transmittable-thread-local</artifactId>
+        <version>${transmittable-thread-local.version}</version>
       </dependency>
 
     </dependencies>
