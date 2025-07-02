@@ -26,6 +26,8 @@
     <module>xiaohashu-gateway</module>
     <!-- 对象存储服务 -->
     <module>xiaohashu-oss</module>
+    <module>xiaohashu-user</module>
+    <module>xiaohashu-user/xiaohashu-user-biz</module>
   </modules>
 
   <properties>
