@@ -16,8 +16,6 @@ public class LoginUserContextHolder {
 
     /**
      * 设置用户 ID
-     *
-     * @param value
      */
     public static void setUserId(Object value) {
         LOGIN_USER_CONTEXT_THREAD_LOCAL.get().put(GlobalConstants.USER_ID, value);
@@ -25,8 +23,6 @@ public class LoginUserContextHolder {
 
     /**
      * 获取用户 ID
-     *
-     * @return
      */
     public static Long getUserId() {
         Object value = LOGIN_USER_CONTEXT_THREAD_LOCAL.get().get(GlobalConstants.USER_ID);

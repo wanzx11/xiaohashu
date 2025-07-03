@@ -236,6 +236,13 @@
         <version>${minio.version} </version>
       </dependency>
 
+      <dependency>
+        <groupId>com.quanxiaoha</groupId>
+        <artifactId>xiaohashu-oss-api</artifactId>
+        <version>${revision}</version>
+      </dependency>
+
+
     </dependencies>
   </dependencyManagement>
 
