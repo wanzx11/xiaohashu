@@ -73,6 +73,10 @@
 
     <minio.version>8.5.2</minio.version>
 
+    <feign-form.version>3.8.0</feign-form.version>
+
+    <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
+
   </properties>
 
   <!-- 统一依赖管理 -->
@@ -131,6 +135,12 @@
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
         <version>${lombok.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.quanxiaoha</groupId>
+        <artifactId>xiaoha-framework</artifactId>
+        <version>${revision}</version>
       </dependency>
 
       <dependency>
@@ -242,6 +252,13 @@
         <version>${revision}</version>
       </dependency>
 
+      <!-- Feign 表单提交 -->
+      <dependency>
+        <groupId>io.github.openfeign.form</groupId>
+        <artifactId>feign-form</artifactId>
+        <version>${feign-form.version}</version>
+      </dependency>
+
 
     </dependencies>
   </dependencyManagement>
@@ -306,6 +323,35 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+    <plugins>
+      <!-- 统一 revision 版本, 解决子模块打包无法解析 ${revision} 版本号问题 -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>${flatten-maven-plugin.version}</version>
+        <configuration>
+          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+          <updatePomFile>true</updatePomFile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
 
   </build>
 

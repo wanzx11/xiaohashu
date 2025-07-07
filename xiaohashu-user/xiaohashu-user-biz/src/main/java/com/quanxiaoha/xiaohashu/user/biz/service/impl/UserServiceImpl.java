@@ -2,6 +2,7 @@ package com.quanxiaoha.xiaohashu.user.biz.service.impl;
 
 import com.alibaba.nacos.shaded.com.google.common.base.Preconditions;
 import com.quanxiaoha.framework.biz.context.holder.LoginUserContextHolder;
+import com.quanxiaoha.framework.common.exception.BizException;
 import com.quanxiaoha.framework.common.response.Response;
 import com.quanxiaoha.framework.common.util.ParamUtils;
 import com.quanxiaoha.xiaohashu.oss.api.FileFeignApi;
@@ -10,6 +11,7 @@ import com.quanxiaoha.xiaohashu.user.biz.domain.mapper.UserDOMapper;
 import com.quanxiaoha.xiaohashu.user.biz.enums.ResponseCodeEnum;
 import com.quanxiaoha.xiaohashu.user.biz.enums.SexEnum;
 import com.quanxiaoha.xiaohashu.user.biz.model.vo.UpdateUserInfoReqVO;
+import com.quanxiaoha.xiaohashu.user.biz.rpc.OssRpcService;
 import com.quanxiaoha.xiaohashu.user.biz.service.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private UserDOMapper userDOMapper;
 
     @Resource
-    private FileFeignApi fileFeignApi;
+    private OssRpcService ossRpcService;
 
     /**
      * 更新用户信息
@@ -47,8 +49,18 @@ public class UserServiceImpl implements UserService {
         MultipartFile avatarFile = updateUserInfoReqVO.getAvatar();
 
         if (Objects.nonNull(avatarFile)) {
-            fileFeignApi.test();
+            String avatar = ossRpcService.uploadFile(avatarFile);
+            log.info("==> 调用 oss 服务成功，上传头像，url：{}", avatar);
+
+            // 若上传头像失败，则抛出业务异常
+            if (StringUtils.isBlank(avatar)) {
+                throw new BizException(ResponseCodeEnum.UPLOAD_AVATAR_FAIL);
+            }
+
+            userDO.setAvatar(avatar);
+            needUpdate = true;
         }
+
 
         // 昵称
         String nickname = updateUserInfoReqVO.getNickname();
@@ -89,10 +101,20 @@ public class UserServiceImpl implements UserService {
             needUpdate = true;
         }
 
+
         // 背景图
         MultipartFile backgroundImgFile = updateUserInfoReqVO.getBackgroundImg();
         if (Objects.nonNull(backgroundImgFile)) {
-            // todo: 调用对象存储服务上传文件
+            String backgroundImg = ossRpcService.uploadFile(backgroundImgFile);
+            log.info("==> 调用 oss 服务成功，上传背景图，url：{}", backgroundImg);
+
+            // 若上传背景图失败，则抛出业务异常
+            if (StringUtils.isBlank(backgroundImg)) {
+                throw new BizException(ResponseCodeEnum.UPLOAD_BACKGROUND_IMG_FAIL);
+            }
+
+            userDO.setBackgroundImg(backgroundImg);
+            needUpdate = true;
         }
 
         if (needUpdate) {
