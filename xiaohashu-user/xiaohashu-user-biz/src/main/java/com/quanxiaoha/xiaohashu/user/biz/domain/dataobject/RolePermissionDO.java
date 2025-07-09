@@ -7,32 +7,17 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDO {
+public class RolePermissionDO {
     private Long id;
 
-    private String xiaohashuId;
+    private Long roleId;
 
-    private String password;
-
-    private String nickname;
-
-    private String avatar;
-
-    private LocalDateTime birthday;
-
-    private String backgroundImg;
-
-    private String phone;
-
-    private Byte sex;
-
-    private Integer status;
-
-    private String introduction;
+    private Long permissionId;
 
     private LocalDateTime createTime;
 

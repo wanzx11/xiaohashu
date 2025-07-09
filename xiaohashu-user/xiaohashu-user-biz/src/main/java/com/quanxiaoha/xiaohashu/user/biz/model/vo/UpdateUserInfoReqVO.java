@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -33,12 +34,12 @@ public class UpdateUserInfoReqVO {
     /**
      * 性别
      */
-    private Integer sex;
+    private Byte sex;
 
     /**
      * 生日
      */
-    private LocalDate birthday;
+    private LocalDateTime birthday;
 
     /**
      * 个人介绍

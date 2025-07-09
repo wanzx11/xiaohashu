@@ -7,37 +7,33 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDO {
+public class PermissionDO {
     private Long id;
 
-    private String xiaohashuId;
+    private Long parentId;
 
-    private String password;
+    private String name;
 
-    private String nickname;
+    private Byte type;
 
-    private String avatar;
+    private String menuUrl;
 
-    private LocalDateTime birthday;
+    private String menuIcon;
 
-    private String backgroundImg;
+    private Integer sort;
 
-    private String phone;
+    private String permissionKey;
 
-    private Byte sex;
-
-    private Integer status;
-
-    private String introduction;
+    private Byte status;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
 
     private Boolean isDeleted;
-
 }
