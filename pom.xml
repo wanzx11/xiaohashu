@@ -28,6 +28,7 @@
     <module>xiaohashu-oss</module>
     <module>xiaohashu-user</module>
     <module>xiaohashu-user/xiaohashu-user-biz</module>
+      <module>xiaohashu-kv</module>
   </modules>
 
   <properties>
